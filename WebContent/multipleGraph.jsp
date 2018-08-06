@@ -4,171 +4,182 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>选择两个要素观察</title>
+<title>各个要素之间关系图</title>
 </head>
 <script src="echarts.min.js"></script>
 <script src="jquery-3.3.1.min.js"></script>
 <body>
 
-	<form id="input">
-		<input type="checkbox" name="elements" value="temperature"><span>温度</span>
-		<input type="checkbox" name="elements" value="conduct"><span>电导率</span>
-		<input type="checkbox" name="elements" value="depth"><span>深度</span>
-		<input type="checkbox" name="elements" value="volts1"><span>第一外部电压</span>
-		<input type="checkbox" name="elements" value="volts2"><span>第二外部电压</span>
-		<input type="checkbox" name="elements" value="NTU"><span>浊度</span>
-		<input type="checkbox" name="elements" value="oxy"><span>溶解氧</span>
-		<p>
-			<button type="button" onclick="loadGraph();">提交并查看数据</button>
-	</form>
 	<p>
 	<div id="main"
-		style="width: 1200px; height: 800px; align: center; margin: 0px auto;"></div>
+		style="width: 1400px; height: 800px; align: center; margin: 0px auto;"></div>
 	<!-- initialize my chart -->
 	<script type="text/javascript">
 		var myChart = echarts.init(document.getElementById('main'));
-		var colors = [ '#5793f3', '#d14a61' ];
+		var colors = [ '#5793f3', '#d14a61', '#675bba', '#9400D3' ,'#D2691E'];
 		option = {
-			color : colors,
-			title : {
-				text : '',
-				x : 'center'
-			},
-			tooltip : {
-				trigger : 'axis',
-				axisPointer : {
-					animation : false
-				}
-			},
-			legend : {
-				data : [],
-				x : 'left'
-			},
-			toolbox : {
-				feature : {
-					dataZoom : {
-						yAxisIndex : 'none'
-					},
-					restore : {},
-					saveAsImage : {}
-				}
-			},
-			axisPointer : {
-				link : {
-					xAxisIndex : 'all'
-				}
-			},
-			dataZoom : [ {
-				show : true,
-				realtime : true,
-				start : 30,
-				end : 70,
-				xAxisIndex : [ 0, 1 ]
-			}, {
-				type : 'inside',
-				realtime : true,
-				start : 30,
-				end : 70,
-				xAxisIndex : [ 0, 1 ]
-			} ],
-			grid : [ {
-				left : 50,
-				right : 50,
-				height : '35%'
-			}, {
-				left : 50,
-				right : 50,
-				top : '55%',
-				height : '35%'
-			} ],
-			xAxis : [ {
-				type : 'category',
-				boundaryGap : false,
-				axisLine : {
-					onZero : true,
-					lineStyle : {
-						color : colors[0]
-					}
-				},
-				data : []
-			}, {
-				gridIndex : 1,
-				type : 'category',
-				boundaryGap : false,
-				axisLine : {
-					onZero : true,
-					lineStyle : {
-						color : colors[0]
-					}
-				},
-				data : [],
-				position : 'top'
-			} ],
+				color : colors,
+			    title: {
+			        text: '同济大学海底科学观测网',
+			        x: 'left'
+			    },
+			    tooltip: {
+			        trigger: 'axis',
+			        axisPointer: {
+			            animation: false
+			        }
+			    },
+			    legend: {
+			        data:['温度','电导率','溶解氧','浊度','深度'],
+			        x: 'center'
+			    },
+			    toolbox: {
+			        feature: {
+			            dataZoom: {
+			                yAxisIndex: 'none'
+			            },
+			            restore: {show: true},
+			            saveAsImage: {show: true}
+			        }
+			    },
+			    dataZoom: [
+			        {
+			            show: true,
+			            realtime: true,
+			            start: 30,
+			            end: 70,
+			            xAxisIndex: [0, 1]
+			        },
+			        {
+			            type: 'inside',
+			            realtime: true,
+			            start: 30,
+			            end: 70,
+			            xAxisIndex: [0, 1]
+			        }
+			    ],
+			    grid: [{
+			        left: 50,
+			        right: 200,
+			        height: '40%'
+			    }, {
+			        left: 50,
+			        right: 200,
+			        top: '55%',
+			        height: '40%'
+			    }
+			    ],
+			    xAxis : [
+			        {
+			            type : 'category',
+			            boundaryGap : false,
+			            axisLine: {onZero: true},
+			            data: []
+			        },
+			        {
+			            gridIndex: 1,
+			            type : 'category',
+			            boundaryGap : false,
+			            axisLine: {onZero: true},
+			            data: [],
+			            position: 'top'
+			        }
+			    ],
 			yAxis : [ {
-				name : '',
+				name : '溫度 (℃)',
+				type : 'value',	
+				min:17,
+				max:22,
+				axisLine : {
+					lineStyle : {
+						color : colors[0]
+					}
+				}
+			},{	gridIndex : 1,
+				name : '电导率 (S/m)',
 				type : 'value',
+				min:4.4,
+				max:4.6,
+				axisLine : {
+					lineStyle : {
+						color : colors[1]
+					}
+				},
+				inverse : true
+			}, {
+				name : '溶解氧 (umol/kg)',
+				type : 'value',
+				min:0.7,
+				max:1,
+				axisLine : {
+					lineStyle : {
+						color : colors[2]
+					}
+				}
 			}, {
 				gridIndex : 1,
-				name : '',
+				name : '浊度 (NTU)',
 				type : 'value',
+				min:24,
+				max:28,
+				axisLine : {
+					lineStyle : {
+						color : colors[3]
+					}
+				},
 				inverse : true
-			} ],
+			}, {
+				gridIndex : 1,
+				name : '深度 (米)',
+				type : 'value',
+				min:30,
+				max:50,
+				axisLine : {
+					lineStyle : {
+						color : colors[4]
+					}
+				},
+				offset:60,
+				inverse : true
+			}],
 			series : [ {
-				name : '',
+				name : '温度',
 				type : 'line',
 				hoverAnimation : false,
 				data : []
-			}, {
-				name : '',
+			},  {
+				name : '电导率',
 				type : 'line',
 				xAxisIndex : 1,
 				yAxisIndex : 1,
 				hoverAnimation : false,
 				data : []
-			} ]
+			},{
+				name : '溶解氧',
+				type : 'line',
+				xAxisIndex : 0,
+				yAxisIndex : 2,
+				hoverAnimation : false,
+				data : []
+			},{
+				name : '浊度',
+				type : 'line',
+				xAxisIndex : 1,
+				yAxisIndex : 3,
+				hoverAnimation : false,
+				data : []
+			},{
+				name : '深度',
+				type : 'line',
+				xAxisIndex : 1,
+				yAxisIndex : 4,
+				hoverAnimation : false,
+				data : []
+			}
+			]
 		};
 		myChart.setOption(option);
 		myChart.showLoading();
-	</script>
-
-
-	<script>
-		function loadGraph() {
-			if ($("input[name='elements']:checked").length < 2) {
-				alert("你必须选择两个要素");
-				location.reload();
-			}
-			var obj = document.getElementsByName("elements");
-			var lName = [];
-			var message = '';
-			for (var k = 0; k < obj.length; k++) {
-				if (obj[k].checked) {
-					message += obj[k].value + ",";
-					switch (obj[k].value) {
-					case "temperature":
-						lName.push('温度');
-						break;
-					case "conduct":
-						lName.push('电导率');
-						break;
-					case "depth":
-						lName.push('深度');
-						break;
-					case "volts1":
-						lName.push('第一外部电压');
-						break;
-					case "volts2":
-						lName.push('第二外部电压');
-						break;
-					case "NTU":
-						lName.push('浊度');
-						break;
-					case "oxy":
-						lName.push('溶解氧');
-						break;
-					}
-				}
-			}
 			var xmlRequest = null;
 			if (window.XMLHttpRequest) {// code for all new browsers
 				xmlRequest = new XMLHttpRequest();
@@ -177,8 +188,8 @@
 			}
 			if (xmlRequest != null) {
 				xmlRequest.open("GET",
-						"${pageContext.request.contextPath}/LineGraphServlet?input="
-								+ message, true);
+						"${pageContext.request.contextPath}/GraphServlet?input="
+								+ "load", true);
 				xmlRequest.send();
 			} else {
 				alert("Your brower doesn't support XMLHTTP; You'd better change to another brower");
@@ -187,97 +198,52 @@
 			xmlRequest.onreadystatechange = function() {
 				if (xmlRequest.readyState == 4 && xmlRequest.status == 200) {
 					var result = eval('(' + xmlRequest.responseText + ')');
+					<!--温度 -->
 					var dataset1 = [];
+					<!--电导率-->
 					var dataset2 = [];
-					var unit = [];
+					<!--深度-->
+					var dataset3 = [];
+					<!--浊度-->
+					var dataset4 = [];
+					<!--溶解氧-->
+					var dataset5 = [];
 					var now = [];
 					for ( var i in result) {
-						if (lName[0] == '温度') {
 							dataset1.push(result[i].temperature);
-							unit.push('摄氏度');
-						} else if (lName[0] == '电导率') {
-							dataset1.push(result[i].conduct);
-							unit.push('S/m');
-						} else if (lName[0] == '深度') {
-							dataset1.push(result[i].depth);
-							unit.push('米');
-						} else if (lName[0] == '第一外部电压') {
-							dataset1.push(result[i].volts1);
-							unit.push('volts');
-						} else if (lName[0] == '第二外部电压') {
-							dataset1.push(result[i].volts2);
-							unit.push('volts');
-						} else if (lName[0] == '浊度') {
-							dataset1.push(result[i].NTU);
-							unit.push('NTU');
-						} else if (lName[0] == "溶解氧") {
-							dataset1.push(result[i].oxy);
-							unit.push('umol/kg');
-						}
-						if (lName[1] == '温度') {
-							dataset2.push(result[i].temperature);
-							unit.push('摄氏度');
-						} else if (lName[1] == '电导率') {
 							dataset2.push(result[i].conduct);
-							unit.push('S/m');
-						} else if (lName[1] == '深度') {
-							dataset2.push(result[i].depth);
-							unit.push('米');
-						} else if (lName[1] == '第一外部电压') {
-							dataset2.push(result[i].volts1);
-							unit.push('volts');
-						} else if (lName[1] == '第二外部电压') {
-							dataset2.push(result[i].volts2);
-							unit.push('volts');
-						} else if (lName[1] == '浊度') {
-							dataset2.push(result[i].NTU);
-							unit.push('NTU');
-						} else if (lName[1] == "溶解氧") {
-							dataset2.push(result[i].oxy);
-							unit.push('umol/kg');
-						}
+							dataset3.push(result[i].depth);
+							dataset4.push(result[i].NTU);
+							dataset5.push(result[i].oxy);
 						now.push(result[i].date);
 					}
 					myChart.hideLoading();
 					myChart.setOption({
-						title : {
-							text : lName[0] + '与' + lName[1] + "关系图"
-						},
-						legend : {
-							data : lName
-						},
 						xAxis : [ {
 							data : now
 						}, {
 							data : now,
 						} ],
-						yAxis : [ {
-							name : lName[0] + ' (' + unit[0] + ')',
-						}, {
-
-							name : lName[1] + ' (' + unit[1] + ')',
-						} ],
 						series : [ {
-							name : lName[0],
+							name : '温度',
 							data : dataset1
 						}, {
-							name : lName[1],
+							name : '电导率',
 							data : dataset2
+						},{
+							name : '溶解氧',
+							data : dataset5
+						},{
+							name : '浊度',
+							data : dataset4
+						},{
+							name : '深度',
+							data : dataset3
 						} ]
 					});
 
 				}
 			};
-		};
-		//<!-- jquery to trace the number of checked checkbox-->
-		$(document).ready(function() {
-			$('input[type=checkbox]').click(function() {
-				$(this).attr('disabled', 'disabled');
-				if ($("input[name='elements']:checked").length >= 2) {
-					$("input[name='elements']").attr('disabled', 'disabled');
-				}
-			});
-		});
 	</script>
 </body>
 </html>
